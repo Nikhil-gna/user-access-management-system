@@ -2,6 +2,10 @@ import express from "express";
 import "reflect-metadata";
 import { AppDataSource } from "./dataSource/dataSource";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth.routes";
+import softwareRoutes from "./routes/software.routes";
+import requestRoutes from "./routes/request.routes";
+import { errorHandler } from "./middleware/errorHandler";
 
 dotenv.config();
 const app = express();
@@ -13,6 +17,11 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
+app.use("/api/auth", authRoutes);
+app.use("/api/software", softwareRoutes);
+app.use("/api/requests", requestRoutes);
+
+app.use(errorHandler);
 
 AppDataSource.initialize()
   .then(() => {
