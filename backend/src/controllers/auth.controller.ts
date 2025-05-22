@@ -72,6 +72,7 @@ export const login = async (
     return sendResponse(res, 200, "Login successful", {
       token,
       role: user.role,
+      username: user.username,
     });
   } catch (err) {
     if (err instanceof z.ZodError) {
